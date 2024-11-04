@@ -606,6 +606,7 @@ require('lazy').setup({
         verible = {
           cmd = { 'verible-verilog-ls' },
           filetypes = { 'systemverilog', 'verilog' },
+          root_dir = vim.fn.getcwd(),
         },
       }
 
