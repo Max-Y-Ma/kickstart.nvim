@@ -1,0 +1,10 @@
+[user]
+  email = maxma2@illinois.edu
+  name = Max-Y-Ma
+
+[alias]
+  lg = log --oneline --graph --all
+  st = status -s
+
+[credential]
+  helper = store
