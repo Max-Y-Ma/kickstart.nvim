@@ -126,6 +126,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Set Esc to <leader> + j
+vim.keymap.set('i', '<C-q>', '<Esc>')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -608,6 +611,16 @@ require('lazy').setup({
           filetypes = { 'systemverilog', 'verilog' },
           root_dir = vim.fn.getcwd(),
         },
+      }
+
+      local lspconfutil = require 'lspconfig/util'
+      local root_pattern = lspconfutil.root_pattern('veridian.yml', '.git')
+      require('lspconfig').veridian.setup {
+        cmd = { 'veridian' },
+        root_dir = function(fname)
+          local filename = lspconfutil.path.is_absolute(fname) and fname or lspconfutil.path.join(vim.loop.cwd(), fname)
+          return root_pattern(filename) or lspconfutil.path.dirname(filename)
+        end,
       }
 
       -- Ensure the servers and tools above are installed
