@@ -99,6 +99,7 @@ return {
       end
 
       local terminal = Terminal:new {
+        cmd = 'ssh -CY maxma@sccf06223107.zsc12.intel.com',
         direction = 'float',
         float_opts = {
           boarder = 'double',
@@ -118,9 +119,34 @@ return {
         terminal:toggle()
       end
 
+      local home = Terminal:new {
+        dir = vim.fn.getcwd(),
+        direction = 'float',
+        float_opts = {
+          border = 'double',
+        },
+        -- function to run on opening the terminal
+        on_open = function(term)
+          vim.cmd 'startinsert!'
+          vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+        end,
+        -- function to run on closing the terminal
+        on_close = function(term)
+          vim.cmd 'startinsert!'
+        end,
+      }
+
+      function _home_toggle()
+        home:toggle()
+      end
+
       vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>lua _terminal_toggle()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>h', '<cmd>lua _home_toggle()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
       require('toggleterm').setup()
     end,
+  },
+  {
+    'mg979/vim-visual-multi',
   },
 }
