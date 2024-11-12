@@ -148,5 +148,12 @@ return {
   },
   {
     'mg979/vim-visual-multi',
+    config = function()
+      vim.cmd [[
+        nmap   <C-LeftMouse>         <Plug>(VM-Mouse-Cursor)
+        nmap   <C-RightMouse>        <Plug>(VM-Mouse-Word)
+        nmap   <M-C-RightMouse>      <Plug>(VM-Mouse-Column)
+      ]]
+    end,
   },
 }
